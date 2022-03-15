@@ -1,0 +1,56 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="d-flex justify-content-between mb-2 px-2">
+      <span></span>
+      <button mat-flat-button color="primary" (click)="productDetail({}, -1)">
+        Tambah Produk
+      </button>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Judul</th>
+          <th scope="col">Penulis</th>
+          <th scope="col">Penerbit</th>
+          <th scope="col">Tahun terbit</th>
+          <th scope="col">ISBN</th>
+          <th scope="col">Harga</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books; let idx = index">
+          <th scope="row">{{ 1 + idx }}</th>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.publisher }}</td>
+          <td>{{ book.year }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.price }}</td>
+
+          <td align="right">
+            <button
+              mat-flat-button
+              class="mx-2"
+              color="primary"
+              (click)="productDetail(book, idx)"
+            >
+              Edit
+            </button>
+            <button
+              mat-flat-button
+              class="mx-2"
+              color="warn"
+              (click)="deleteProduct(idx)"
+            >
+              Hapus
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>

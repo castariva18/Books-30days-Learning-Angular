@@ -1,0 +1,35 @@
+<h3 mat-dialog-title>Detail produk</h3>
+<div mat-dialog-content>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Judul</mat-label>
+    <input matInput [(ngModel)]="data.title" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Penulis</mat-label>
+    <input matInput [(ngModel)]="data.author" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Penerbit</mat-label>
+    <input matInput [(ngModel)]="data.publisher" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Tahun terbit</mat-label>
+    <input matInput [(ngModel)]="data.year" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>ISBN</mat-label>
+    <input matInput [(ngModel)]="data.isbn" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Harga</mat-label>
+    <input matInput [(ngModel)]="data.price" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-action align="end">
+  <button mat-flat-button color="accent" mat-dialog-close class="mx-2">
+    Batal
+  </button>
+
+  <button mat-flat-button color="primary" (click)="saveData()">Simpan</button>
+</div>
