@@ -1,4 +1,7 @@
-<mat-card>
+<div *ngIf="loading" class="d-flex justify-content-center">
+  <mat-spinner></mat-spinner>
+</div>
+<mat-card *ngIf="!loading">
   <mat-card-header>
     <mat-card-title>{{ title }}</mat-card-title>
   </mat-card-header>
@@ -44,9 +47,10 @@
               mat-flat-button
               class="mx-2"
               color="warn"
-              (click)="deleteProduct(idx)"
+              (click)="deleteProduct(book.id, idx)"
+              [disabled]="loadingDelete[idx]"
             >
-              Hapus
+              {{ loadingDelete[idx] ? "Menghapus..." : "Hapus" }}
             </button>
           </td>
         </tr>
