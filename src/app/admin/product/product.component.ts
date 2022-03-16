@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ApiService } from 'src/app/services/api.service';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
@@ -10,8 +11,9 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 export class ProductComponent implements OnInit {
   title: any;
   book: any = {};
-  books: any = [];
-  constructor(public dialog: MatDialog) {}
+  public books: any = [];
+
+  constructor(public dialog: MatDialog, public api: ApiService) {}
 
   ngOnInit(): void {
     this.title = 'Produk';
@@ -24,35 +26,24 @@ export class ProductComponent implements OnInit {
     //   price: '50000',
     // };
     this.getBooks();
+
+    //console.log(this.api.get);
   }
 
+  loading: boolean = false;
+
   getBooks() {
-    this.books = [
-      {
-        title: 'Angular Pemula',
-        author: 'Belmiro',
-        publisher: 'Jubilee Enterprise',
-        year: '2022',
-        isbn: '098765',
-        price: '50000',
+    this.loading = true;
+    this.api.getAllBook('books').subscribe(
+      (res) => {
+        this.books = res;
+        this.loading = false;
       },
-      {
-        title: 'Angular Menengah',
-        author: 'Belmiro',
-        publisher: 'Jubilee Enterprise',
-        year: '2022',
-        isbn: '108765',
-        price: '70000',
-      },
-      {
-        title: 'Angular Expert',
-        author: 'Belmiro',
-        publisher: 'Jubilee Enterprise',
-        year: '2022',
-        isbn: '118765',
-        price: '100000',
-      },
-    ];
+      (error) => {
+        this.loading = false;
+        alert('Ups! Something is wrong :(');
+      }
+    );
   }
 
   productDetail(data: any, idx: number) {
@@ -63,15 +54,25 @@ export class ProductComponent implements OnInit {
     dialog.afterClosed().subscribe((res) => {
       if (res) {
         if (idx == -1) this.books.push(res);
-        else this.books[idx] = res;
+        else this.books[idx] = data;
       }
     });
   }
-
-  deleteProduct(idx: any) {
+  loadingDelete: any = {};
+  deleteProduct(id: any, idx: any) {
     var conf = confirm('Delete item?');
     if (conf) {
-      this.books.splice(idx, 1);
+      this.loadingDelete[idx] = true;
+      this.api.deleteBook('books/' + id).subscribe(
+        (res) => {
+          this.books.splice(idx, 1);
+          this.loadingDelete[idx] = false;
+        },
+        (error) => {
+          this.loadingDelete[idx] = false;
+          alert('Delete data failed');
+        }
+      );
     }
   }
 }

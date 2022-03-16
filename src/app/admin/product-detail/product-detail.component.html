@@ -31,5 +31,12 @@
     Batal
   </button>
 
-  <button mat-flat-button color="primary" (click)="saveData()">Simpan</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="saveData()"
+    [disabled]="loading"
+  >
+    {{ loading ? "Menyimpan..." : "Simpan" }}
+  </button>
 </div>
